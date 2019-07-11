@@ -12,6 +12,20 @@ The DApp User Interface when running should look like...
 
 ![truffle test](images/ftc_transaction_history.png)
 
+# Project write-up - UML
+![truffle test](UML/Activity.png)
+
+![truffle test](UML/Sequence.png)
+
+![truffle test](UML/State.png)
+
+![truffle test](UML/Class.png)
+
+# Project write-up - Libraries
+No external libraries have been used. Used libraries and version:
+- Truffle v4.1.15 - a development framework for Ethereum
+- Node v10.13.0
+- Ganache CLI v6.4.5 (ganache-core: 2.5.7)
 
 ## Getting Started
 
