@@ -31,7 +31,7 @@ contract MarketPlaceRole {
   }
 
   // Define a function 'addMarketPlace' that adds this role
-  function addMarketPlace(address account) public onlyMarketPlace {
+  function addMarketPlace(address account)  public {
     _addMarketPlace(account);
   }
 

@@ -2,16 +2,6 @@
 
 This repository containts an Ethereum DApp that demonstrates a Supply Chain flow between a Beekeeper (Seller), a MarketPlace, a courier and a Buyer. The user story is similar to any commonly used supply chain process. A Seller can add items to the inventory system stored in the blockchain. A Buyer can purchase such items from the inventory system. Additionally a Seller can mark an item as Shipped, and similarly a Buyer can mark an item as Received.
 
-The DApp User Interface when running should look like...
-
-![truffle test](images/ftc_product_overview.png)
-
-![truffle test](images/ftc_farm_details.png)
-
-![truffle test](images/ftc_product_details.png)
-
-![truffle test](images/ftc_transaction_history.png)
-
 ## Project write-up 
 ### UML
 ![truffle test](UML/Activity_v3.png)
@@ -52,103 +42,84 @@ The Following contracts were created, inheriting from Role.sol:
 ## Part 3: Test smart contract code coverage
 Requirement: Smart contract has associated tests
 
-At minimum, test every function for every function you implemented from your Sequence Diagram. For example, from this Sequence Diagram we would need to test 10 functions:
-
-    harvestItem()
-    processItem()
-    packItem()
-    addItem()
-    buyItem()
-    shiptItem()
-    receiveItem()
-    purchaseItem()
-    fetchItemBufferOne()
-    fetchItemBufferTwo()
+Every function  implemented from your Sequence Diagram was tested:
+*  Smart contract function 'createItem()' that allows a beekeeper to create a hive
+*  Smart contract function 'HiveReady' that allows a beekeeper to mark an item 'Ready'
+*  Smart contract function 'advertiseItem' that allows the beekeeper to mark an item 'Advertised'
+*  Smart contract function 'sellItem' that allows a MarketPlace to mark an item 'ForSale'
+*  Smart contract function 'buyItem' that allows the Seller to mark an item 'Sold'
+*  Smart contract function 'packItem' that allows a farmer to mark an item 'Packed'
+*  Smart contract function 'shipItem' that allows the courier to mark an item 'Shipped'
+*  Smart contract function 'receiveItem' that allows the consumer to mark an item 'Received'
+*  Smart contract function fetchItemBufferOne() that allows anyone to fetch item details from blockchain
+*  Smart contract function fetchItemBufferTwo() that allows anyone to fetch item details from blockchain
 
 ![truffle test](UML/Sequence_v3.png)
 
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Prerequisites
-
-Please make sure you've already installed ganache-cli, Truffle and enabled MetaMask extension in your browser.
-
-```
-Give examples (to be clarified)
-```
-
-### Installing
-
-A step by step series of examples that tell you have to get a development env running
-
+Please make sure you've already installed ganache-cli and Truffle. 
 Clone this repository:
-
 ```
 git clone https://github.com/anmi404/project-6/
 ```
-
 Change directory to ```project-6``` folder and install all requisite npm packages (as listed in ```package.json```):
 
 ```
 cd project-6
 npm install
 ```
-
-Launch Ganache:
-
+To test in a locally running blockchain, launch Ganache:
 ```
 ganache-cli -m "spirit supply whale amount human item harsh scare congress discover talent hamster"
 ```
 
-Your terminal should look something like this:
-
-![truffle test](images/ganache-cli.png)
-
-In a separate terminal window, Compile smart contracts:
+In a separate terminal window, Compile and test the smart contracts:
 
 ```
 truffle compile
-```
-
-Your terminal should look something like this:
-
-![truffle test](images/truffle_compile.png)
-
-This will create the smart contract artifacts in folder ```build\contracts```.
-
-Migrate smart contracts to the locally running blockchain, ganache-cli:
-
-```
 truffle migrate
-```
-
-Your terminal should look something like this:
-
-![truffle test](images/truffle_migrate.png)
-
-Test smart contracts:
-
-```
 truffle test
-```
-
+````
 All 10 tests should pass.
 
-![truffle test](images/truffle_test.png)
+### Deploy your Contract to Rinkeby
 
-In a separate terminal window, launch the DApp:
+In order to deploy the contract to the Rinkeby Public Network, you need to configure file truffle-config.js (or truffle.js). 
+To that end the following steps can be followed:
+1. Get the endpoint address from https://infura.io: Create a new project and choose the Rinkeby network from the Endpoints menu. Copy the address and paste the infura key into the truffle.js file. 
+2. Uncomment the line: 
+```
+const HDWalletProvider = require('truffle-hdwallet-provider'); 
+```
+3. Copy the mnemonic returned by Metamask to constant __mnemonic__. 
+4. Insert the following lines into the networks table:
+```
+rinkeby: {
+        provider: () => new HDWalletProvider(mnemonic, `https://rinkeby.infura.io/v3/${infuraKey}`),
+          network_id: 4,       // rinkeby's id
+          gas: 4500000,        // rinkeby has a lower block limit than mainnet
+          gasPrice: 10000000000
+        },
+```
+5. Setup a valid Rinkeby account in Metamask.
 
+### Testing the project
+In order to test the project in the local network, run:
 ```
-npm run dev
+truffle migrate --reset
+truffle test --network develop
 ```
+To execute in the rinkeby network the contract run command:
+```
+truffle migrate --reset --network rinkeby
+```
+Contract 
+https://rinkeby.etherscan.io/address/0x23f44501c8b521c87f0e049af180f52d5cef0a6c
+
+### Part 5: Modify client code to interact with smart contract
+Create the frontend that allows your users to interact with your DApp. This should be a simple and clean frontend that manages product lifecycle as the product navigates down the supply chain.
 
 ## Built With
-
 * [Ethereum](https://www.ethereum.org/) - Ethereum is a decentralized platform that runs smart contracts
-* [IPFS](https://ipfs.io/) - IPFS is the Distributed Web | A peer-to-peer hypermedia protocol
-to make the web faster, safer, and more open.
 * [Truffle Framework](http://truffleframework.com/) - Truffle is the most popular development framework for Ethereum with a mission to make your life a whole lot easier.
 
 ## Authors
@@ -160,4 +131,4 @@ See also the list of [contributors](https://github.com/anmi404/project-6/contrib
 * Solidity
 * Ganache-cli
 * Truffle
-* IPFS
+

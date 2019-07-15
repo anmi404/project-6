@@ -28,8 +28,8 @@ const infuraKey = "fd856cb03d44499bb837102fa0b6b4c3";
 //
 const mnemonic = "thing beauty giggle lonely choice blind test era parent balcony menu napkin";
 //const mnemonic = "spirit supply whale amount human item harsh scare congress discover talent hamster";
-// const fs = require('fs');
-// const mnemonic = fs.readFileSync(".secret").toString().trim();
+//const fs = require('fs');
+//const mnemonic = fs.readFileSync(".secret").toString().trim();
 
 module.exports = {
   /**

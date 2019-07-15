@@ -31,7 +31,7 @@ contract BeekeeperRole {
   }
 
   // Define a function 'addBeekeeper' that adds this role
-  function addBeekeeper(address account) public onlyBeekeeper {
+  function addBeekeeper(address account) public  {
     _addBeekeeper(account);
   }
 

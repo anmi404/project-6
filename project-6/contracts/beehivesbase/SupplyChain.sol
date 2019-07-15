@@ -1,9 +1,17 @@
 pragma solidity ^0.4.24;
 // Define a contract 'Supplychain'
-contract SupplyChain {
+import "../beehivesaccesscontrol/ConsumerRole.sol";
+import "../beehivesaccesscontrol/MarketPlaceRole.sol";
+import "../beehivesaccesscontrol/BeekeeperRole.sol";
+import "../beehivesaccesscontrol/CourierRole.sol";
+import "../beehivescore/Ownable.sol";
+
+
+// Define a contract 'Supplychain'
+contract SupplyChain is ConsumerRole, MarketPlaceRole, BeekeeperRole, CourierRole, Ownable {
 
   // Define 'owner'
-  address owner;
+  address SupplyChainOwner;
 
   // Define a variable called 'upc' for Universal Product Code (UPC)
   uint  upc;
@@ -64,9 +72,9 @@ contract SupplyChain {
   event Shipped(uint upc);
   event Received(uint upc);
 
-  // Define a modifer that checks to see if msg.sender == owner of the contract
+  // Define a modifer that checks to see if msg.sender == SupplyChainOwner of the contract
   modifier onlyOwner() {
-    require(msg.sender == owner);
+    require(msg.sender == SupplyChainOwner);
     _;
   }
 
@@ -142,15 +150,15 @@ contract SupplyChain {
   // and set 'sku' to 1
   // and set 'upc' to 1
   constructor() public payable {
-    owner = msg.sender;
+    SupplyChainOwner = msg.sender;
     sku = 1;
     upc = 1;
   }
 
   // Define a function 'kill' if required
   function kill() public {
-    if (msg.sender == owner) {
-      selfdestruct(owner);
+    if (msg.sender == SupplyChainOwner) {
+      selfdestruct(SupplyChainOwner);
     }
   }
 
@@ -177,7 +185,7 @@ contract SupplyChain {
   }
 
   // Define a function 'HiveReady' that allows a beekeeper to mark an item 'Ready'
-  function HiveReady(uint _upc) public created(_upc) verifyCaller(owner)
+  function HiveReady(uint _upc) public created(_upc) verifyCaller(items[_upc].ownerID) onlyBeekeeper()
   // Call modifier to check if upc has passed previous supply chain stage
   // Call modifier to verify caller of this function
   {
@@ -190,19 +198,21 @@ contract SupplyChain {
 
   // Define a function 'advertiseItem' that allows the beekeeper to mark an item 'Advertised'
   // Call modifier to check if upc has passed previous supply chain stage
-  function advertiseItem(uint _upc, address _MarketPlaceID) public ready(_upc) verifyCaller(owner)
+  function advertiseItem(uint _upc, address _MarketPlaceID) public ready(_upc) verifyCaller(items[_upc].ownerID) onlyBeekeeper()
     // Access Control List enforced by calling Smart Contract / DApp ??
     {
+    MarketPlaceRole.addMarketPlace(_MarketPlaceID);
+
     // Update the appropriate fields: itemState
-     items[_upc].itemState = State.Advertised;
      items[_upc].MarketPlaceID = _MarketPlaceID;  // Metamask-Ethereum address of the MarketPlace
+     items[_upc].itemState = State.Advertised;
 
     // Emit the appropriate event
     emit Advertised(_upc);
   }
 
   // Define a function 'sellItem' that allows a MarketPlace to mark an item 'ForSale'
-  function sellItem(uint _upc, uint _price) public advertised(_upc) verifyCaller(items[_upc].MarketPlaceID)
+  function sellItem(uint _upc, uint _price) public advertised(_upc) verifyCaller(items[_upc].MarketPlaceID) //onlyMarketPlace()
   // Call modifier to check if upc has passed previous supply chain stage
   // Call modifier to verify caller of this function
   {
@@ -217,7 +227,7 @@ contract SupplyChain {
   // Define a function 'buyItem' that allows the Seller to mark an item 'Sold'
   // Use the above defined modifiers to check if the item is available for sale, if the buyer has paid enough, 
   // and any excess ether sent is refunded back to the buyer
-  function buyItem(uint _upc) public payable forSale(_upc) paidEnough(items[_upc].productPrice) checkValue(_upc) 
+  function buyItem(uint _upc) public payable forSale(_upc) checkValue(_upc) paidEnough(items[_upc].productPrice) 
     // Call modifier to check if upc has passed previous supply chain stage
     // Call modifer to check if buyer has paid enough
     // Call modifer to send any excess ether back to buyer
@@ -225,33 +235,27 @@ contract SupplyChain {
     // Update the appropriate fields - ownerID, distributorID, itemState
     uint256 _price = items[_upc].productPrice;
     address _consumerID = msg.sender; // Metamask-Ethereum address of the Consumer
-    
+    addConsumer(_consumerID);
+
     // Transfer money to farmer
     items[_upc].ownerID.transfer(_price);
-    items[_upc].itemState = State.Sold;
     items[_upc].ownerID = _consumerID;
     items[_upc].consumerID = _consumerID;
+    items[_upc].itemState = State.Sold;
 
     // emit the appropriate event
     emit Sold(_upc);
   }
-     
- //   uint    productID;  // Product ID potentially a combination of upc + sku
- //   string  productNotes; // Product Notes
- //   uint    productPrice; // Product Price
- //   State   itemState;  // Product State as represented in the enum above
- //   address MarketPlaceID;  // Metamask-Ethereum address of the MarketPlace
- //   address CourierID; // Metamask-Ethereum address of the Courier
- //   address consumerID; // Metamask-Ethereum address of the Consumer    
 
  // Define a function 'packItem' that allows a farmer to mark an item 'Packed'
-  function packItem(uint _upc, address _CourierID) public sold(_upc) verifyCaller(items[_upc].originFarmerID)
+  function packItem(uint _upc, address _CourierID) public sold(_upc) verifyCaller(items[_upc].originFarmerID) onlyBeekeeper()
   // Call modifier to check if upc has passed previous supply chain stage
   // Call modifier to verify caller of this function
   {
     // Update the appropriate fields
     items[_upc].itemState = State.Packed;
     items[_upc].CourierID = _CourierID;
+    addCourier( _CourierID);
 
     // Emit the appropriate event
     emit Packed(_upc);
@@ -259,21 +263,22 @@ contract SupplyChain {
 
   // Define a function 'shipItem' that allows the courier to mark an item 'Shipped'
   // Use the above modifers to check if the item is packed
-  function shipItem(uint _upc) public packed(_upc) verifyCaller(items[_upc].CourierID)
+  function shipItem(uint _upc) public packed(_upc) verifyCaller(items[_upc].CourierID) onlyCourier()
     // Call modifier to check if upc has passed previous supply chain stage
     // Call modifier to verify caller of this function
     {
     // Update the appropriate fields
     items[_upc].itemState = State.Shipped;
+
+   
     // Emit the appropriate event
     emit Shipped(_upc);
   }
 
   // Define a function 'receiveItem' that allows the consumer to mark an item 'Received'
   // Use the above modifiers to check if the item is shipped
-  function receiveItem(uint _upc) public shipped(_upc) verifyCaller(items[_upc].ownerID)
+  function receiveItem(uint _upc) public shipped(_upc) verifyCaller(items[_upc].consumerID) onlyConsumer()
     // Call modifier to check if upc has passed previous supply chain stage
-    
     // Access Control List enforced by calling Smart Contract / DApp
     {
     // Update the appropriate fields: itemState

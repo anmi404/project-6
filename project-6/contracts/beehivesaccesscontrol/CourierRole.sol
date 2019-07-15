@@ -31,7 +31,7 @@ contract CourierRole {
   }
 
   // Define a function 'addCourier' that adds this role
-  function addCourier(address account) public onlyCourier {
+  function addCourier(address account) public  {
     _addCourier(account);
   }
 

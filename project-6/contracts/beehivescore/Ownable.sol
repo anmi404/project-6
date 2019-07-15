@@ -1,4 +1,5 @@
 pragma solidity ^0.4.24;
+import "../beehivesbase/SupplyChain.sol";
 
 /// Provides basic authorization control
 contract Ownable {
