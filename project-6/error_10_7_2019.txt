@@ -1,0 +1,71 @@
+Anolans-MacBook-Air-4:project-6 anolan$ truffle compile
+
+Compiling your contracts...
+===========================
+> Compiling ./contracts/Migrations.sol
+> Compiling ./contracts/coffeeaccesscontrol/ConsumerRole.sol
+> Compiling ./contracts/coffeeaccesscontrol/DistributorRole.sol
+> Compiling ./contracts/coffeeaccesscontrol/FarmerRole.sol
+> Compiling ./contracts/coffeeaccesscontrol/RetailerRole.sol
+> Compiling ./contracts/coffeeaccesscontrol/Roles.sol
+> Compiling ./contracts/coffeebase/SupplyChain.sol
+> Compiling ./contracts/coffeecore/Ownable.sol
+
+/Users/anolan/code/udacity/BlockChainDeveloper_II/BlockchainSupplyChainSolution/project-6/project-6/contracts/Migrations.sol:1:1: SyntaxError: Source file requires different compiler version (current compiler is 0.5.0+commit.1d4f565a.Emscripten.clang - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.23;
+^----------------------^
+,/Users/anolan/code/udacity/BlockChainDeveloper_II/BlockchainSupplyChainSolution/project-6/project-6/contracts/coffeeaccesscontrol/Roles.sol:1:1: SyntaxError: Source file requires different compiler version (current compiler is 0.5.0+commit.1d4f565a.Emscripten.clang - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+,/Users/anolan/code/udacity/BlockChainDeveloper_II/BlockchainSupplyChainSolution/project-6/project-6/contracts/coffeeaccesscontrol/ConsumerRole.sol:1:1: SyntaxError: Source file requires different compiler version (current compiler is 0.5.0+commit.1d4f565a.Emscripten.clang - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+,/Users/anolan/code/udacity/BlockChainDeveloper_II/BlockchainSupplyChainSolution/project-6/project-6/contracts/coffeeaccesscontrol/DistributorRole.sol:1:1: SyntaxError: Source file requires different compiler version (current compiler is 0.5.0+commit.1d4f565a.Emscripten.clang - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+,/Users/anolan/code/udacity/BlockChainDeveloper_II/BlockchainSupplyChainSolution/project-6/project-6/contracts/coffeeaccesscontrol/FarmerRole.sol:1:1: SyntaxError: Source file requires different compiler version (current compiler is 0.5.0+commit.1d4f565a.Emscripten.clang - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+,/Users/anolan/code/udacity/BlockChainDeveloper_II/BlockchainSupplyChainSolution/project-6/project-6/contracts/coffeeaccesscontrol/RetailerRole.sol:1:1: SyntaxError: Source file requires different compiler version (current compiler is 0.5.0+commit.1d4f565a.Emscripten.clang - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+,/Users/anolan/code/udacity/BlockChainDeveloper_II/BlockchainSupplyChainSolution/project-6/project-6/contracts/coffeebase/SupplyChain.sol:1:1: SyntaxError: Source file requires different compiler version (current compiler is 0.5.0+commit.1d4f565a.Emscripten.clang - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+,/Users/anolan/code/udacity/BlockChainDeveloper_II/BlockchainSupplyChainSolution/project-6/project-6/contracts/coffeecore/Ownable.sol:1:1: SyntaxError: Source file requires different compiler version (current compiler is 0.5.0+commit.1d4f565a.Emscripten.clang - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+,/Users/anolan/code/udacity/BlockChainDeveloper_II/BlockchainSupplyChainSolution/project-6/project-6/contracts/coffeebase/SupplyChain.sol:156:60: TypeError: Data location must be "memory" for parameter in function, but none was given.
+ ... int _upc, address _originFarmerID, string _originFarmName, string _originFarmInformation, st ...
+                                        ^--------------------^
+,/Users/anolan/code/udacity/BlockChainDeveloper_II/BlockchainSupplyChainSolution/project-6/project-6/contracts/coffeebase/SupplyChain.sol:156:84: TypeError: Data location must be "memory" for parameter in function, but none was given.
+ ... nFarmerID, string _originFarmName, string _originFarmInformation, string  _originFarmLatitude, stri ...
+                                        ^---------------------------^
+,/Users/anolan/code/udacity/BlockChainDeveloper_II/BlockchainSupplyChainSolution/project-6/project-6/contracts/coffeebase/SupplyChain.sol:156:115: TypeError: Data location must be "memory" for parameter in function, but none was given.
+ ... me, string _originFarmInformation, string  _originFarmLatitude, string  _originFarmLongitude, str ...
+                                        ^-------------------------^
+,/Users/anolan/code/udacity/BlockChainDeveloper_II/BlockchainSupplyChainSolution/project-6/project-6/contracts/coffeebase/SupplyChain.sol:156:144: TypeError: Data location must be "memory" for parameter in function, but none was given.
+ ... tion, string  _originFarmLatitude, string  _originFarmLongitude, string  _productNotes) public 
+                                        ^--------------------------^
+,/Users/anolan/code/udacity/BlockChainDeveloper_II/BlockchainSupplyChainSolution/project-6/project-6/contracts/coffeebase/SupplyChain.sol:156:174: TypeError: Data location must be "memory" for parameter in function, but none was given.
+ ... ude, string  _originFarmLongitude, string  _productNotes) public 
+                                        ^-------------------^
+,/Users/anolan/code/udacity/BlockChainDeveloper_II/BlockchainSupplyChainSolution/project-6/project-6/contracts/coffeebase/SupplyChain.sol:272:3: TypeError: Data location must be "memory" for return parameter in function, but none was given.
+  string  originFarmName,
+  ^--------------------^
+,/Users/anolan/code/udacity/BlockChainDeveloper_II/BlockchainSupplyChainSolution/project-6/project-6/contracts/coffeebase/SupplyChain.sol:273:3: TypeError: Data location must be "memory" for return parameter in function, but none was given.
+  string  originFarmInformation,
+  ^---------------------------^
+,/Users/anolan/code/udacity/BlockChainDeveloper_II/BlockchainSupplyChainSolution/project-6/project-6/contracts/coffeebase/SupplyChain.sol:274:3: TypeError: Data location must be "memory" for return parameter in function, but none was given.
+  string  originFarmLatitude,
+  ^------------------------^
+,/Users/anolan/code/udacity/BlockChainDeveloper_II/BlockchainSupplyChainSolution/project-6/project-6/contracts/coffeebase/SupplyChain.sol:275:3: TypeError: Data location must be "memory" for return parameter in function, but none was given.
+  string  originFarmLongitude
+  ^-------------------------^
+,/Users/anolan/code/udacity/BlockChainDeveloper_II/BlockchainSupplyChainSolution/project-6/project-6/contracts/coffeebase/SupplyChain.sol:300:3: TypeError: Data location must be "memory" for return parameter in function, but none was given.
+  string  productNotes,
+  ^------------------^
+Compilation failed. See above.
+Truffle v5.0.7 (core: 5.0.7)
+Node v10.13.0
+
