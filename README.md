@@ -72,6 +72,8 @@ To test in a locally running blockchain, launch Ganache:
 ganache-cli -m "spirit supply whale amount human item harsh scare congress discover talent hamster"
 ```
 
+thing beauty giggle lonely choice blind test era parent balcony menu napkin
+
 In a separate terminal window, Compile and test the smart contracts:
 
 ```
@@ -112,8 +114,8 @@ To execute in the rinkeby network the contract run command:
 ```
 truffle migrate --reset --network rinkeby
 ```
-Contract 
-https://rinkeby.etherscan.io/address/0x23f44501c8b521c87f0e049af180f52d5cef0a6c
+* Transaction Hash:  0x248f0bf0b0db4bb7a685307d3dec781116c21ae7063b9394dab72a3b40ebe438 
+* Contract address: https://rinkeby.etherscan.io/address/0x4D0dF32F22F2081a2B01Cd0C6b70c7E154c04507
 
 ### Part 5: Modify client code to interact with smart contract
 Create the frontend that allows your users to interact with your DApp. This should be a simple and clean frontend that manages product lifecycle as the product navigates down the supply chain.

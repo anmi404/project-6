@@ -99,19 +99,9 @@ App = {
             }
             console.log('metamaskAccountID:',res);
             App.metamaskAccountID = res[0];
-            //App.MarketPlaceID = res[1];
-            //App.CourierID = res[2];
-            //App.consumerID = res[3];
 
         })      
     },
-//0x09cA62860d3a215e8999d9eD76306899ec0d42f5 - a14f4190d0d2a78900b123ec5893ddb9e28056c74bea8ac2d211113ebc3e33b1    
-//0x28D1515a897BDC5212b79CD614C805740d02acF5 - b18caa840c5be0445e9a86ec097c86702103fb058054dacad1e5a2cc5ac5e438    
-//0x27D8D15CbC94527cAdf5eC14B69519aE23288B95 - 9137dc4de37d28802ff9e5ee3fe982f1ca2e5faa52f54a00a6023f546b23e779    
-//0x018C2daBef4904ECbd7118350A0c54DbeaE3549A - 18911376efeff48444d1323178bc9f5319686b754845e53eb1b777e08949ee9b
-//0xCe5144391B4aB80668965F2Cc4f2CC102380Ef0A - f948c5bb8b54d25b2060b5b19967f50f07dc388d6a5dada56e5904561e19f08b
-//0x460c31107DD048e34971E57DA2F99f659Add4f02 - fad19151620a352ab90e5f9c9f4282e89e1fe32e070f2c618e7bc9f6d0d236fb
-//thing beauty giggle lonely choice blind test era parent balcony menu napkin
 
     initSupplyChain: function () {
         /// Source the truffle compiled smart contracts
@@ -198,7 +188,7 @@ App = {
             $("#ftc-item").text(result);
             console.log('createItem',result);
         }).catch(function(err) {
-            console.log('createItem err ',err.message);
+            console.log('createItem ',err.message);
         });
     },
 
@@ -212,14 +202,13 @@ App = {
             $("#ftc-item").text(result);
             console.log('HiveReady',result);
         }).catch(function(err) {
-            console.log('HiveReady err ', err.message);
+            console.log('HiveReady ', err.message);
         });
     },
 
     advertiseItem: function (event) {
         event.preventDefault();
         var processId = parseInt($(event.target).data('id'));
-        //const _MarketPlaceID = document.getElementById("MarketPlaceID").value;
         
         App.contracts.SupplyChain.deployed().then(function(instance) {
             return instance.advertiseItem(App.upc, App.metamaskAccountID, {from: App.metamaskAccountID});
@@ -227,7 +216,7 @@ App = {
             $("#ftc-item").text(result);
             console.log('advertiseItem',result);
         }).catch(function(err) {
-            console.log(err.message, App.upc, App.MarketPlaceID);
+            console.log(err.message);
         });
     },
     
@@ -236,14 +225,14 @@ App = {
         var processId = parseInt($(event.target).data('id'));
 
         App.contracts.SupplyChain.deployed().then(function(instance) {
-            const productPrice = web3.toWei(0.5, "ether");
+            const productPrice = web3.toWei(1, "ether");
             console.log('productPrice',App.productPrice);
             return instance.sellItem(App.upc, App.productPrice, {from: App.metamaskAccountID});
         }).then(function(result) {
             $("#ftc-item").text(result);
             console.log('sellItem',result);
         }).catch(function(err) {
-            console.log('sellItem err ',err.message);
+            console.log('sellItem ',err.message);
         });
     },
 
@@ -258,7 +247,7 @@ App = {
             $("#ftc-item").text(result);
             console.log('buyItem',result);
         }).catch(function(err) {
-            console.log('buyItem err ',err.message);
+            console.log('buyItem ',err.message);
         });
     },
 

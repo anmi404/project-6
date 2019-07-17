@@ -11,7 +11,7 @@ import "../beehivescore/Ownable.sol";
 contract SupplyChain is ConsumerRole, MarketPlaceRole, BeekeeperRole, CourierRole, Ownable {
 
   // Define 'owner'
-  address SupplyChainOwner;
+  //address SupplyChainOwner;
 
   // Define a variable called 'upc' for Universal Product Code (UPC)
   uint  upc;
@@ -74,7 +74,7 @@ contract SupplyChain is ConsumerRole, MarketPlaceRole, BeekeeperRole, CourierRol
 
   // Define a modifer that checks to see if msg.sender == SupplyChainOwner of the contract
   modifier onlyOwner() {
-    require(msg.sender == SupplyChainOwner);
+    require(msg.sender == owner());
     _;
   }
 
@@ -149,16 +149,17 @@ contract SupplyChain is ConsumerRole, MarketPlaceRole, BeekeeperRole, CourierRol
   // In the constructor set 'owner' to the address that instantiated the contract
   // and set 'sku' to 1
   // and set 'upc' to 1
-  constructor() public payable {
-    SupplyChainOwner = msg.sender;
+  //to call parent constructor!!
+  constructor() public payable Ownable() {
+    //SupplyChainOwner = msg.sender;
     sku = 1;
     upc = 1;
   }
 
   // Define a function 'kill' if required
   function kill() public {
-    if (msg.sender == SupplyChainOwner) {
-      selfdestruct(SupplyChainOwner);
+    if (isOwner()) {
+      selfdestruct(owner());
     }
   }
 
@@ -169,14 +170,17 @@ contract SupplyChain is ConsumerRole, MarketPlaceRole, BeekeeperRole, CourierRol
     items[_upc].itemState = defaultState;
     items[_upc].sku = sku;
     items[_upc].upc = _upc;
-    items[_upc].ownerID = _originFarmerID;
+    items[_upc].ownerID = owner();
     items[_upc].originFarmerID = _originFarmerID;
     items[_upc].originFarmName = _originFarmName;
     items[_upc].originFarmInformation = _originFarmInformation;
     items[_upc].originFarmLatitude = _originFarmLatitude;
     items[_upc].originFarmLongitude = _originFarmLongitude;
     items[_upc].productNotes = _productNotes;
-    items[_upc].productID = _upc + sku; // Product ID potentially a combination of upc + sku
+    items[_upc].MarketPlaceID = address(0);
+    items[_upc].CourierID = address(0);
+    items[_upc].consumerID = address(0);
+    items[_upc].productID = sku; // Product ID potentially a combination of upc + sku
 
     // Increment sku
     sku = sku + 1;
@@ -201,11 +205,11 @@ contract SupplyChain is ConsumerRole, MarketPlaceRole, BeekeeperRole, CourierRol
   function advertiseItem(uint _upc, address _MarketPlaceID) public ready(_upc) verifyCaller(items[_upc].ownerID) onlyBeekeeper()
     // Access Control List enforced by calling Smart Contract / DApp ??
     {
-    MarketPlaceRole.addMarketPlace(_MarketPlaceID);
-
     // Update the appropriate fields: itemState
      items[_upc].MarketPlaceID = _MarketPlaceID;  // Metamask-Ethereum address of the MarketPlace
      items[_upc].itemState = State.Advertised;
+     MarketPlaceRole.addMarketPlace(_MarketPlaceID);
+
 
     // Emit the appropriate event
     emit Advertised(_upc);
@@ -235,13 +239,13 @@ contract SupplyChain is ConsumerRole, MarketPlaceRole, BeekeeperRole, CourierRol
     // Update the appropriate fields - ownerID, distributorID, itemState
     uint256 _price = items[_upc].productPrice;
     address _consumerID = msg.sender; // Metamask-Ethereum address of the Consumer
-    ConsumerRole.addConsumer(_consumerID);
 
     // Transfer money to farmer
     items[_upc].ownerID.transfer(_price);
     items[_upc].ownerID = _consumerID;
     items[_upc].consumerID = _consumerID;
     items[_upc].itemState = State.Sold;
+    ConsumerRole.addConsumer(_consumerID);
 
     // emit the appropriate event
     emit Sold(_upc);
