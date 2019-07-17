@@ -214,7 +214,7 @@ contract SupplyChain is ConsumerRole, MarketPlaceRole, BeekeeperRole, CourierRol
   // Define a function 'sellItem' that allows a MarketPlace to mark an item 'ForSale'
   function sellItem(uint _upc, uint _price) public advertised(_upc) verifyCaller(items[_upc].MarketPlaceID) //onlyMarketPlace()
   // Call modifier to check if upc has passed previous supply chain stage
-  // Call modifier to verify caller of this function
+  // Call modifier to verify caller of this function.
   {
     // Update the appropriate fields
     items[_upc].productPrice = _price;
