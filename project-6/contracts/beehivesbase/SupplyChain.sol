@@ -235,7 +235,7 @@ contract SupplyChain is ConsumerRole, MarketPlaceRole, BeekeeperRole, CourierRol
     // Update the appropriate fields - ownerID, distributorID, itemState
     uint256 _price = items[_upc].productPrice;
     address _consumerID = msg.sender; // Metamask-Ethereum address of the Consumer
-    addConsumer(_consumerID);
+    ConsumerRole.addConsumer(_consumerID);
 
     // Transfer money to farmer
     items[_upc].ownerID.transfer(_price);
@@ -255,7 +255,7 @@ contract SupplyChain is ConsumerRole, MarketPlaceRole, BeekeeperRole, CourierRol
     // Update the appropriate fields
     items[_upc].itemState = State.Packed;
     items[_upc].CourierID = _CourierID;
-    addCourier( _CourierID);
+    CourierRole.addCourier( _CourierID);
 
     // Emit the appropriate event
     emit Packed(_upc);
