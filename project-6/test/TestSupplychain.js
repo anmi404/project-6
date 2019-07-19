@@ -15,36 +15,36 @@ contract('SupplyChain', function(accounts) {
     var productID = sku + upc
     const productNotes = "Best stingless honey bees in the universe"
     const productPrice = web3.toWei(1, "ether")
-    var itemState = 0
-    const MarketPlaceID = accounts[2]
-    const CourierID = accounts[3]
-    const consumerID = accounts[4]
+    var itemState = 0 //Created
+    const MarketPlaceID = accounts[1]
+    const CourierID = accounts[1]
+    const consumerID = accounts[1]
     const emptyAddress = '0x00000000000000000000000000000000000000'
 
     ///Available Accounts
     ///==================
-    ///(0) 0x27d8d15cbc94527cadf5ec14b69519ae23288b95
-    ///(1) 0x018c2dabef4904ecbd7118350a0c54dbeae3549a
-    ///(2) 0xce5144391b4ab80668965f2cc4f2cc102380ef0a
-    ///(3) 0x460c31107dd048e34971e57da2f99f659add4f02
-    ///(4) 0xd37b7b8c62be2fdde8daa9816483aebdbd356088
-    ///(5) 0x27f184bdc0e7a931b507ddd689d76dba10514bcb
-    ///(6) 0xfe0df793060c49edca5ac9c104dd8e3375349978
-    ///(7) 0xbd58a85c96cc6727859d853086fe8560bc137632
-    ///(8) 0xe07b5ee5f738b2f87f88b99aac9c64ff1e0c7917
-    ///(9) 0xbd3ff2e3aded055244d66544c9c059fa0851da44
+   // (0) 0x09ca62860d3a215e8999d9ed76306899ec0d42f5 (~100 ETH)
+   // (1) 0x9c5073e861405c8f2c3afc9932bc026310012f41 (~100 ETH)
+   // (2) 0x63a59dd1594f866ea763aff8ddc3101955a0df66 (~100 ETH)
+   // (3) 0x28d1515a897bdc5212b79cd614c805740d02acf5 (~100 ETH)
+   // (4) 0x9f7a40bfacab7665f1f7802955747ba86a6eb8fb (~100 ETH)
+   // (5) 0x0c08a91bcd655598a6dde428acdf40115da14666 (~100 ETH)
+   // (6) 0x661b03327b7d27d535f82283fd07d083bf8fb9ff (~100 ETH)
+   // (7) 0x5fbe05ca0768533aa4e377ff8a242a5c2f18b20a (~100 ETH)
+   // (8) 0x5ac7c639f193dca7ee35d959de924ca63eb3462b (~100 ETH)
+   // (9) 0x1403a107a01f5dc11c29d1c57896b036528b84df (~100 ETH)
 
     console.log("ganache-cli accounts used here...")
     console.log("Contract Owner: accounts[0] ", accounts[0])
     console.log("Beekeeper: accounts[1] ", accounts[1])
-    console.log("MarketPlace: accounts[2] ", accounts[2])
-    console.log("Courier: accounts[3] ", accounts[3])
-    console.log("Consumer: accounts[4] ", accounts[4])
+    console.log("MarketPlace: accounts[2] ", accounts[1])
+    console.log("Courier: accounts[3] ", accounts[1])
+    console.log("Consumer: accounts[4] ", accounts[1])
 
     // 1st Test
     it("Testing smart contract function createItem() that allows a beekeeper to create a hive", async() => {
         const supplyChain = await SupplyChain.deployed()
-        supplyChain.addBeekeeper(originFarmerID, {from: ownerID})
+        supplyChain.addBeekeeper(originFarmerID, {from: originFarmerID})
         
         // Declare and Initialize a variable for event
         var eventEmitted = false

@@ -1,1 +1,1 @@
-ganache-cli -m "spirit supply whale amount human item harsh scare congress discover talent hamster"
+ganache-cli --gasLimit 300000000 --gasPrice 20000000000 -m "thing beauty giggle lonely choice blind test era parent balcony menu napkin"

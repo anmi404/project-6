@@ -170,17 +170,17 @@ contract SupplyChain is ConsumerRole, MarketPlaceRole, BeekeeperRole, CourierRol
     items[_upc].itemState = defaultState;
     items[_upc].sku = sku;
     items[_upc].upc = _upc;
-    items[_upc].ownerID = owner();
+    items[_upc].ownerID = _originFarmerID;
     items[_upc].originFarmerID = _originFarmerID;
     items[_upc].originFarmName = _originFarmName;
     items[_upc].originFarmInformation = _originFarmInformation;
     items[_upc].originFarmLatitude = _originFarmLatitude;
     items[_upc].originFarmLongitude = _originFarmLongitude;
     items[_upc].productNotes = _productNotes;
-    items[_upc].MarketPlaceID = address(0);
-    items[_upc].CourierID = address(0);
-    items[_upc].consumerID = address(0);
-    items[_upc].productID = sku; // Product ID potentially a combination of upc + sku
+    items[_upc].MarketPlaceID = _originFarmerID;
+    items[_upc].CourierID = _originFarmerID;
+    items[_upc].consumerID = _originFarmerID;
+    items[_upc].productID = sku + _upc; // Product ID potentially a combination of upc + sku
 
     // Increment sku
     sku = sku + 1;
@@ -189,7 +189,7 @@ contract SupplyChain is ConsumerRole, MarketPlaceRole, BeekeeperRole, CourierRol
   }
 
   // Define a function 'HiveReady' that allows a beekeeper to mark an item 'Ready'
-  function HiveReady(uint _upc) public created(_upc) verifyCaller(items[_upc].ownerID) onlyBeekeeper()
+  function HiveReady(uint _upc) public created(_upc) verifyCaller(items[_upc].originFarmerID) onlyBeekeeper()
   // Call modifier to check if upc has passed previous supply chain stage
   // Call modifier to verify caller of this function
   {
@@ -202,14 +202,13 @@ contract SupplyChain is ConsumerRole, MarketPlaceRole, BeekeeperRole, CourierRol
 
   // Define a function 'advertiseItem' that allows the beekeeper to mark an item 'Advertised'
   // Call modifier to check if upc has passed previous supply chain stage
-  function advertiseItem(uint _upc, address _MarketPlaceID) public ready(_upc) verifyCaller(items[_upc].ownerID) onlyBeekeeper()
+  function advertiseItem(uint _upc, address _MarketPlaceID) public ready(_upc) verifyCaller(items[_upc].originFarmerID) onlyBeekeeper()
     // Access Control List enforced by calling Smart Contract / DApp ??
     {
     // Update the appropriate fields: itemState
      items[_upc].MarketPlaceID = _MarketPlaceID;  // Metamask-Ethereum address of the MarketPlace
      items[_upc].itemState = State.Advertised;
      MarketPlaceRole.addMarketPlace(_MarketPlaceID);
-
 
     // Emit the appropriate event
     emit Advertised(_upc);
@@ -344,17 +343,21 @@ contract SupplyChain is ConsumerRole, MarketPlaceRole, BeekeeperRole, CourierRol
   {
     // Assign values to the 9 parameters
   itemSKU = items[_upc].sku;
-  consumerID = items[_upc].consumerID; 
-  CourierID = items[_upc].CourierID;
-  MarketPlaceID = items[_upc].MarketPlaceID;
+  itemUPC = items[_upc].upc;
+  productID = items[_upc].productID;
+  productNotes = items[_upc].productNotes;
+  productPrice = items[_upc].productPrice;
   itemState = uint(items[_upc].itemState);
+  MarketPlaceID = items[_upc].MarketPlaceID;
+  CourierID = items[_upc].CourierID;
+  consumerID = items[_upc].consumerID; 
   return 
   (
     itemSKU,
-    items[_upc].upc,
-    items[_upc].productID,
-    items[_upc].productNotes,
-    items[_upc].productPrice, 
+    itemUPC,
+    productID,
+    productNotes,
+    productPrice, 
     itemState,
     MarketPlaceID,  
     CourierID,

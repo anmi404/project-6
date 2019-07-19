@@ -69,10 +69,8 @@ npm install
 ```
 To test in a locally running blockchain, launch Ganache:
 ```
-ganache-cli -m "spirit supply whale amount human item harsh scare congress discover talent hamster"
+ganache-cli -m "thing beauty giggle lonely choice blind test era parent balcony menu napkin"
 ```
-
-thing beauty giggle lonely choice blind test era parent balcony menu napkin
 
 In a separate terminal window, Compile and test the smart contracts:
 
@@ -83,6 +81,21 @@ truffle test
 ````
 All 10 tests should pass.
 
+  Contract: SupplyChain
+    ✓ Testing smart contract function createItem() that allows a beekeeper to create a hive (347ms)
+    ✓ Testing smart contract function 'HiveReady' that allows a beekeeper to mark an item 'Ready' (151ms)
+    ✓ Testing smart contract function 'advertiseItem' that allows the beekeeper to mark an item 'Advertised' (150ms)
+    ✓ Testing smart contract function 'sellItem' that allows a MarketPlace to mark an item 'ForSale' (148ms)
+    ✓ Testing smart contract function 'buyItem' that allows the Seller to mark an item 'Sold' (174ms)
+    ✓ Testing smart contract function function 'packItem' that allows a farmer to mark an item 'Packed' (151ms)
+    ✓ Testing smart contract function 'shipItem' that allows the courier to mark an item 'Shipped' (147ms)
+    ✓ Testing smart contract function 'receiveItem' that allows the consumer to mark an item 'Received' (122ms)
+    ✓ Testing smart contract function fetchItemBufferOne() that allows anyone to fetch item details from blockchain
+    ✓ Testing smart contract function fetchItemBufferTwo() that allows anyone to fetch item details from blockchain
+
+
+  10 passing (2s)
+  
 ### Deploy your Contract to Rinkeby
 
 In order to deploy the contract to the Rinkeby Public Network, you need to configure file truffle-config.js (or truffle.js). 
