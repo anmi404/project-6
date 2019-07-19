@@ -95,7 +95,7 @@ All 10 tests should pass.
 
 
   10 passing (2s)
-  
+
 ### Deploy your Contract to Rinkeby
 
 In order to deploy the contract to the Rinkeby Public Network, you need to configure file truffle-config.js (or truffle.js). 
@@ -127,8 +127,8 @@ To execute in the rinkeby network the contract run command:
 ```
 truffle migrate --reset --network rinkeby
 ```
-* Transaction Hash:  0x248f0bf0b0db4bb7a685307d3dec781116c21ae7063b9394dab72a3b40ebe438 
-* Contract address: https://rinkeby.etherscan.io/address/0x4D0dF32F22F2081a2B01Cd0C6b70c7E154c04507
+* Transaction Hash:  0xb22e1d14a98babfd19121b7103113cd3fce535f7307b2fbf5d6afa8828906c09 
+* Contract address: https://rinkeby.etherscan.io/address/0xaD386197E618d70e55974477bC5cc919B5c1B94f
 
 ### Part 5: Modify client code to interact with smart contract
 Create the frontend that allows your users to interact with your DApp. This should be a simple and clean frontend that manages product lifecycle as the product navigates down the supply chain.

@@ -202,13 +202,13 @@ contract SupplyChain is ConsumerRole, MarketPlaceRole, BeekeeperRole, CourierRol
 
   // Define a function 'advertiseItem' that allows the beekeeper to mark an item 'Advertised'
   // Call modifier to check if upc has passed previous supply chain stage
-  function advertiseItem(uint _upc, address _MarketPlaceID) public ready(_upc) verifyCaller(items[_upc].originFarmerID) onlyBeekeeper()
+  function advertiseItem(uint _upc) public ready(_upc) verifyCaller(items[_upc].originFarmerID) onlyBeekeeper()
     // Access Control List enforced by calling Smart Contract / DApp ??
     {
     // Update the appropriate fields: itemState
-     items[_upc].MarketPlaceID = _MarketPlaceID;  // Metamask-Ethereum address of the MarketPlace
+     //items[_upc].MarketPlaceID = _MarketPlaceID;  // Metamask-Ethereum address of the MarketPlace
      items[_upc].itemState = State.Advertised;
-     MarketPlaceRole.addMarketPlace(_MarketPlaceID);
+     //MarketPlaceRole.addMarketPlace(_MarketPlaceID);
 
     // Emit the appropriate event
     emit Advertised(_upc);
@@ -244,7 +244,7 @@ contract SupplyChain is ConsumerRole, MarketPlaceRole, BeekeeperRole, CourierRol
     items[_upc].ownerID = _consumerID;
     items[_upc].consumerID = _consumerID;
     items[_upc].itemState = State.Sold;
-    ConsumerRole.addConsumer(_consumerID);
+    //ConsumerRole.addConsumer(_consumerID);
 
     // emit the appropriate event
     emit Sold(_upc);
@@ -258,7 +258,7 @@ contract SupplyChain is ConsumerRole, MarketPlaceRole, BeekeeperRole, CourierRol
     // Update the appropriate fields
     items[_upc].itemState = State.Packed;
     items[_upc].CourierID = _CourierID;
-    CourierRole.addCourier( _CourierID);
+    //CourierRole.addCourier( _CourierID);
 
     // Emit the appropriate event
     emit Packed(_upc);

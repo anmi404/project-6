@@ -224,11 +224,10 @@ App = {
     advertiseItem: function (event) {
         event.preventDefault();
         //App.readForm();
-        App.getMetaskAccountID();
 
         var processId = parseInt($(event.target).data('id'));
         App.contracts.SupplyChain.deployed().then(function(instance) {
-            return instance.advertiseItem(App.upc, App.metamaskAccountID, {from: App.metamaskAccountID});
+            return instance.advertiseItem(App.upc, {from: App.metamaskAccountID});
         }).then(function(result) {
             $("#ftc-item").text(result);
             console.log('advertiseItem',result);
