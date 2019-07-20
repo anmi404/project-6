@@ -133,6 +133,7 @@ App = {
     handleButtonClick: async function(event) {
         console.log('handleButtonClick');
         web3 = new Web3(App.web3Provider);
+        App.readForm(); 
 
         App.getMetaskAccountID();
 
